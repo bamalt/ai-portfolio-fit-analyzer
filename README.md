@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Portfolio Fit Analyzer
 
-## Getting Started
+Плотный SaaS MVP на `Next.js + React + shadcn/ui + Supabase`, который оценивает, насколько GitHub-портфолио кандидата подходит под конкретную вакансию.
 
-First, run the development server:
+Основной продуктовый flow:
+
+- создать вакансию;
+- получить AI-критерии;
+- отредактировать их inline;
+- добавить кандидата с GitHub-ссылкой;
+- получить отчет;
+- выбрать лучшего кандидата.
+
+## Стек
+
+- `Next.js App Router`
+- `React`
+- `TypeScript`
+- `shadcn/ui`
+- `Supabase Auth + Postgres + Storage`
+- `OpenAI API compatible` LLM provider
+- `Vercel`
+
+## Быстрый старт
+
+1. Установите зависимости:
+
+```bash
+npm install
+```
+
+2. Создайте `.env.local` по шаблону:
+
+```bash
+cp .env.example .env.local
+```
+
+3. Заполните переменные:
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `LLM_BASE_URL`
+- `LLM_API_KEY`
+- `LLM_MODEL`
+- `GITHUB_TOKEN` опционально, но полезно для лимитов GitHub API
+
+4. Примените SQL-схему из [supabase/migrations/001_initial_schema.sql](./supabase/migrations/001_initial_schema.sql) в вашем проекте Supabase Cloud.
+
+5. Запустите проект:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+6. Откройте `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Особенности реализации
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- UI собран на `login-01` и `sidebar-02` из `shadcn`.
+- Стиль и плотность интерфейса зафиксированы в [AGENTS.md](./AGENTS.md).
+- Scoring engine оценивает кандидатов по критериям конкретной вакансии, а не по заранее зашитому стеку.
+- AI-провайдер сделан `OpenAI API compatible` и меняется через конфиг.
+- Если `.env.local` не заполнен, приложение открывается в demo-режиме с read-only данными.
 
-## Learn More
+## Полезные документы
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [docs/PRD-ai-portfolio-fit-analyzer.md](./docs/PRD-ai-portfolio-fit-analyzer.md)
+- [docs/RUNBOOK.md](./docs/RUNBOOK.md)
+- [AGENTS.md](./AGENTS.md)
