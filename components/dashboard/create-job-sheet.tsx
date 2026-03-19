@@ -4,6 +4,7 @@ import { useMemo, useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import {
   FileTextIcon,
+  LoaderCircleIcon,
   ListChecksIcon,
   SparklesIcon,
 } from "lucide-react"
@@ -186,7 +187,14 @@ export function CreateJobSheet({
             onClick={handleSave}
             disabled={isSaving || !canMutate}
           >
-            {isSaving ? "Сохраняем..." : "Сохранить вакансию"}
+            {isSaving ? (
+              <>
+                <LoaderCircleIcon className="size-4 animate-spin" />
+                Сохраняем...
+              </>
+            ) : (
+              "Сохранить вакансию"
+            )}
           </Button>
         ) : (
           <Button
@@ -195,7 +203,14 @@ export function CreateJobSheet({
             onClick={handleAnalyze}
             disabled={isAnalyzing || isSaving || !canMutate}
           >
-            {isAnalyzing ? "Анализируем..." : "Далее"}
+            {isAnalyzing ? (
+              <>
+                <LoaderCircleIcon className="size-4 animate-spin" />
+                Анализируем...
+              </>
+            ) : (
+              "Далее"
+            )}
           </Button>
         )}
       </div>
@@ -227,7 +242,19 @@ export function CreateJobSheet({
           </Alert>
         ) : null}
 
-        {step !== "review" ? (
+        {step === "analyzing" ? (
+          <div className="flex min-h-[320px] items-center justify-center rounded-md border">
+            <div className="flex max-w-sm flex-col items-center gap-3 text-center">
+              <LoaderCircleIcon className="size-6 animate-spin text-muted-foreground" />
+              <div className="space-y-1">
+                <div className="text-sm font-medium">Анализируем вакансию</div>
+                <p className="text-sm text-muted-foreground">
+                  LLM выделяет требования и формирует критерии оценки по тексту вакансии.
+                </p>
+              </div>
+            </div>
+          </div>
+        ) : step !== "review" ? (
           <div className="grid gap-4">
             <div className="grid gap-2">
               <label htmlFor="job-title" className="text-sm font-medium">

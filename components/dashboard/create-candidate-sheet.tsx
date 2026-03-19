@@ -4,6 +4,7 @@ import { useRef, useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import {
   FileTextIcon,
+  LoaderCircleIcon,
   LinkIcon,
   UserIcon,
 } from "lucide-react"
@@ -101,7 +102,14 @@ export function CreateCandidateSheet({
         className="rounded-md"
         disabled={isPending || !selectedJobId || !canMutate}
       >
-        {isPending ? "Сохраняем..." : "Сохранить кандидата"}
+        {isPending ? (
+          <>
+            <LoaderCircleIcon className="size-4 animate-spin" />
+            Анализируем...
+          </>
+        ) : (
+          "Сохранить кандидата"
+        )}
       </Button>
     </div>
   )

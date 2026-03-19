@@ -1,6 +1,6 @@
 "use client"
 
-import { StarIcon, Trash2Icon } from "lucide-react"
+import { LoaderCircleIcon, StarIcon, Trash2Icon } from "lucide-react"
 import { useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 
@@ -157,7 +157,14 @@ export function DashboardShell({ state }: { state: DashboardState }) {
                 onClick={handleChooseWinner}
                 disabled={!selectedJob || isChoosingWinner || !state.canMutate}
               >
-                {isChoosingWinner ? "Сравниваем..." : "Выбрать лучшего"}
+                {isChoosingWinner ? (
+                  <>
+                    <LoaderCircleIcon className="size-4 animate-spin" />
+                    Сравниваем...
+                  </>
+                ) : (
+                  "Выбрать лучшего"
+                )}
               </Button>
             </div>
           </header>
